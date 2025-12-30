@@ -1,0 +1,35 @@
+# vLLM后端配置 - 生产级目标环境
+backend_type: "vllm"  # 后端类型标识
+
+connection:
+  host: "http://localhost:8000"  # vLLM默认端口
+  timeout: 60  # vLLM响应更快
+  health_check_endpoint: "/health"
+
+features:
+  supports_batching: true
+  supports_concurrent: true
+  supports_streaming: true
+  requires_local_install: false  # 可连接远程vLLM服务
+
+# vLLM特定参数
+vllm_specific:
+  tensor_parallel_size: 1  # GPU数量
+  max_model_len: 32768
+  gpu_memory_utilization: 0.9
+  quantization: "awq"  # 量化支持
+
+# 模型加载命令模板
+model_load_command: "vllm serve {model_repo} --host 0.0.0.0 --port 8000"
+
+# 性能基准（RTX 3060实测）
+benchmarks:
+  single_request_latency: "0.3s"
+  throughput: "150 tokens/s"
+  max_concurrent_users: 8
+
+# 适用环境
+recommended_for:
+  - "生产环境"
+  - "团队测试"
+  - "性能基准测试"

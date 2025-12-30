@@ -1,0 +1,4 @@
+app_name: "Agent Learning System"
+version: "3.0.0"
+debug: true
+log_level: "INFO"

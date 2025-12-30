@@ -1,0 +1,4 @@
+tools:
+  - name: "web_search"
+    description: "Search the internet for information"
+    enabled: true

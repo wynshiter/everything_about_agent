@@ -205,3 +205,5 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+D:\code\python\everything_about_agent\Agent_design_pattern
+*.docs

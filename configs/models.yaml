@@ -1,0 +1,76 @@
+# 模型定义 - 与后端无关
+# 模型ID必须唯一，独立于后端实现
+
+active_model: "qwen3:4b"  # 🎯 当前激活模型
+active_backend: "ollama"  # 🎯 当前激活后端（ollama/vllm）
+
+models:
+  qwen3:4b:
+    name: "Qwen3-4B-Instruct"
+    model_id: "qwen3:4b"
+    
+    # 支持的后端列表（可多个）
+    supported_backends:
+      - "ollama"     # ✅ 完全支持
+      - "vllm"       # ✅ 需要AWQ量化版本
+    
+    # 后端特定仓库路径
+    backend_repos:
+      ollama: "qwen3:4b"
+      vllm: "qwen/Qwen3-4B-Instruct-AWQ"  # AWQ量化版
+    
+    # 资源要求（根据后端动态调整）
+    resources:
+      ollama:
+        min_vram: "6GB"
+        model_size: "4.3GB"
+      vllm:
+        min_vram: "5GB"  # AWQ更省显存
+        model_size: "2.1GB"
+    
+    # 性能参数（后端可覆盖）
+    parameters:
+      temperature: 0.7
+      top_p: 0.9
+      max_tokens: 2048
+    
+    # 能力标记（独立于后端）
+    capabilities:
+      function_calling: true
+      multi_agent: true
+      rag: true
+      code_generation: true
+
+  qwen2.5:3b:
+    name: "Qwen2.5-3B-Instruct"
+    model_id: "qwen2.5:3b"
+    
+    # 支持的后端列表（可多个）
+    supported_backends:
+      - "ollama"     # ✅ 完全支持
+      - "vllm"       # ✅ 需要AWQ量化版本
+    
+    # 后端特定仓库路径
+    backend_repos:
+      ollama: "qwen2.5:3b"
+      vllm: "qwen/Qwen2.5-3B-Instruct-AWQ"
+    
+    # 资源要求
+    resources:
+      ollama:
+        min_vram: "4GB"
+        model_size: "2.3GB"
+      vllm:
+        min_vram: "4GB"
+        model_size: "2.1GB"
+    
+    parameters:
+      temperature: 0.7
+      top_p: 0.9
+      max_tokens: 2048
+    
+    capabilities:
+      function_calling: true
+      multi_agent: true
+      rag: true
+      code_generation: true

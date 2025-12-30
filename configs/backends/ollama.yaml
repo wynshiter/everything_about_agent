@@ -1,0 +1,34 @@
+# Ollama后端配置 - 临时开发环境
+backend_type: "ollama"  # 后端类型标识
+
+connection:
+  host: "http://localhost:11434"
+  timeout: 300
+  health_check_endpoint: "/api/version"
+
+features:
+  supports_batching: false
+  supports_concurrent: false
+  supports_streaming: true
+  requires_local_install: true  # 需在本地运行ollama serve
+
+# Ollama特定参数
+ollama_specific:
+  num_ctx: 2048
+  num_thread: 4
+  keep_alive: "24h"
+
+# 模型拉取命令模板
+model_pull_command: "ollama pull {model_repo}"
+
+# 性能基准
+benchmarks:
+  single_request_latency: "1.2s"
+  throughput: "45 tokens/s"
+  max_concurrent_users: 1
+
+# 适用环境
+recommended_for:
+  - "开发环境"
+  - "个人学习"
+  - "快速原型"
