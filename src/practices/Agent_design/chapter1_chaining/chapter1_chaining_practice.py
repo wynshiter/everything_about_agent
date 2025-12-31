@@ -2,7 +2,7 @@ import sys
 import os
 
 # Ensure src is in python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../")))
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser

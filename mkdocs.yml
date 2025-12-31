@@ -1,0 +1,24 @@
+site_name: Everything About Agent
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+nav:
+  - 🏠 首页: index.md
+  - 📚 Agent 设计模式:
+    - 🔗 Prompt Chaining (提示词链): practices/Agent_design/chapter1_chaining/index.md
+    - 🔀 Routing (路由模式): practices/Agent_design/chapter2_routing/index.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - attr_list
+  - md_in_html
