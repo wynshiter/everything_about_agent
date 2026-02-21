@@ -14,11 +14,69 @@ python src/agents/patterns/chaining.py         # 运行 Prompt Chaining 模式�
 python src/agents/patterns/routing.py          # 运行 Routing 模式演示
 ```
 
-### Windows 快速启动
+### 启动脚本
+
+#### Windows
 双击 `start.bat` 打开交互式菜单，或直接运行：
 ```powershell
 .\start.bat
 ```
+
+#### Linux/macOS
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+### 启动脚本功能菜单
+| 选项 | 功能 | 说明 |
+|------|------|------|
+| 1 | Install/Update Dependencies | 安装/更新项目依赖 |
+| 2 | Run System Verification | 运行系统自检测试 |
+| 3 | Run Prompt Chaining Demo | 运行链式处理演示 |
+| 4 | Run Routing Demo | 运行路由模式演示 |
+| 5 | Start Web Frontend | 启动课程前端页面 (http://localhost:8080) |
+| 6 | Start Web with File Watcher | 启动前端+文件监控自动重载 |
+| 7 | Stop All Services | 停止所有运行中的服务 |
+| 8 | Check Service Status | 检查服务状态（端口、进程、PID） |
+| 9 | Run Diagnostics | 运行系统诊断工具 |
+| 10 | View Logs | 查看日志文件 |
+| 11 | Exit | 退出菜单 |
+
+### 故障排查
+
+#### 使用诊断工具
+```bash
+python scripts/diagnose.py          # 运行完整诊断
+python scripts/diagnose.py --save   # 保存诊断报告到 logs/
+```
+
+诊断工具检查：
+- 系统信息（OS、Python版本）
+- 端口占用状态
+- 进程运行状态
+- 日志分析
+- 依赖检查
+- 配置文件验证
+- 后端连接状态
+- PID文件状态
+
+#### 常见问题解决
+
+**问题：启动后窗口立即关闭**
+- 运行诊断工具检查端口占用
+- 查看日志文件定位错误
+- 使用选项 7 停止已存在的服务
+
+**问题：端口 8080 被占用**
+- 使用选项 8 检查端口状态
+- 使用选项 7 停止占用进程
+- 或修改脚本中的 PORT 变量使用其他端口
+
+**问题：服务异常停止**
+- 检查 logs/ 目录下的日志文件
+- 运行诊断工具获取详细报告
+- 检查 .pids/ 目录中的PID文件状态
 
 ## 架构概览
 

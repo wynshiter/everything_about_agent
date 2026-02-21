@@ -1,17 +1,50 @@
 site_name: Everything About Agent
+site_description: Agent 设计模式学习课程 - 21个核心设计模式详解
+site_url: https://example.com/
+
 theme:
   name: material
+  language: zh
+  palette:
+    primary: indigo
+    accent: blue
   features:
     - navigation.tabs
     - navigation.sections
     - navigation.expand
+    - navigation.top
     - content.code.copy
+    - content.code.annotate
+    - search.highlight
+    - search.share
+  icon:
+    repo: fontawesome/brands/github
 
 nav:
   - 🏠 首页: index.md
-  - 📚 Agent 设计模式:
-    - 🔗 Prompt Chaining (提示词链): practices/Agent_design/chapter1_chaining/index.md
+  - 📖 基础模式:
+    - 🔗 Chaining (提示链): practices/Agent_design/chapter1_chaining/index.md
     - 🔀 Routing (路由模式): practices/Agent_design/chapter2_routing/index.md
+    - ⚡ Parallelization (并行化): practices/Agent_design/chapter3_parallelization/index.md
+    - 🔄 Reflection (反思模式): practices/Agent_design/chapter4_reflection/index.md
+  - 🚀 进阶模式:
+    - 🛠️ Tool Use (工具使用): practices/Agent_design/chapter5_tool_use/index.md
+    - 📋 Planning (规划模式): practices/Agent_design/chapter6_planning/index.md
+    - 👥 Multi-Agent (多Agent协作): practices/Agent_design/chapter7_multi_agent/index.md
+    - 💾 Memory (记忆管理): practices/Agent_design/chapter8_memory/index.md
+    - 📚 Learning (学习与适应): practices/Agent_design/chapter9_learning/index.md
+    - 🔌 MCP (模型上下文协议): practices/Agent_design/chapter10_mcp/index.md
+    - 🎯 Goal Setting (目标设定): practices/Agent_design/chapter11_goal_setting/index.md
+    - ⚠️ Exception Handling (异常处理): practices/Agent_design/chapter12_exception_handling/index.md
+    - 👤 Human-in-Loop (人机协作): practices/Agent_design/chapter13_human_in_loop/index.md
+    - 📚 RAG (检索增强生成): practices/Agent_design/chapter14_rag/index.md
+    - 🔗 A2A (Agent间通信): practices/Agent_design/chapter15_a2a/index.md
+  - 🧠 高级模式:
+    - 🧩 Reasoning (推理技术): practices/Agent_design/chapter17_reasoning/index.md
+    - 🛡️ Guardrails (护栏与安全): practices/Agent_design/chapter18_guardrails/index.md
+    - 📊 Evaluation (评估与监控): practices/Agent_design/chapter19_evaluation/index.md
+    - ⭐ Prioritization (优先级管理): practices/Agent_design/chapter20_prioritization/index.md
+    - 🔍 Exploration (探索与发现): practices/Agent_design/chapter21_exploration/index.md
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -22,3 +55,10 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-repo/everything_about_agent

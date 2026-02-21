@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Design Patterns - 设计模式课程</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot"></i>
+                <span>Agent Design Patterns</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">课程列表</a>
+                <a href="#about">关于</a>
+                <a href="#resources">资源</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Agent 设计模式学习课程</h1>
+            <p>掌握现代 AI Agent 开发的核心设计模式，从基础到高级逐步深入</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">21</span>
+                    <span class="stat-label">设计模式</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">42</span>
+                    <span class="stat-label">代码示例</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">18</span>
+                    <span class="stat-label">PPT课件</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 筛选栏 -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">全部</button>
+                <button class="filter-btn" data-filter="basic">基础模式</button>
+                <button class="filter-btn" data-filter="intermediate">进阶模式</button>
+                <button class="filter-btn" data-filter="advanced">高级模式</button>
+            </div>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索设计模式...">
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程卡片网格 -->
+    <main class="main-content">
+        <div class="container">
+            <div class="patterns-grid" id="patternsGrid">
+                <!-- 动态生成卡片 -->
+            </div>
+        </div>
+    </main>
+
+    <!-- 学习路径 -->
+    <section class="learning-path">
+        <div class="container">
+            <h2>学习路径建议</h2>
+            <div class="path-timeline">
+                <div class="path-item">
+                    <div class="path-icon basic">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="path-content">
+                        <h3>基础阶段</h3>
+                        <p>Chaining → Routing → Parallelization → Reflection</p>
+                        <span>建立对 Agent 基本工作流的理解</span>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-icon intermediate">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="path-content">
+                        <h3>进阶阶段</h3>
+                        <p>Tool Use → Planning → Multi-Agent → Memory</p>
+                        <span>掌握 Agent 的核心能力扩展</span>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-icon advanced">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="path-content">
+                        <h3>高级阶段</h3>
+                        <p>RAG → Reasoning → Guardrails → Evaluation</p>
+                        <span>构建生产级 Agent 系统</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>关于课程</h4>
+                    <p>本课程基于 Agent Design Patterns 文档，系统讲解 AI Agent 开发的核心设计模式。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <a href="#">GitHub 仓库</a>
+                    <a href="#">文档中心</a>
+                    <a href="#">视频教程</a>
+                </div>
+                <div class="footer-section">
+                    <h4>技术栈</h4>
+                    <div class="tech-badges">
+                        <span class="badge">LangChain</span>
+                        <span class="badge">Google ADK</span>
+                        <span class="badge">Mermaid</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Agent Design Patterns Course. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html">课程列表</a>
+        <a href="#about">关于</a>
+        <a href="#resources">资源</a>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

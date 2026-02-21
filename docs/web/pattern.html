@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计模式详情 - Agent Design Patterns</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body data-pattern="">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="index.html">
+                    <i class="fas fa-robot"></i>
+                    <span>Agent Design Patterns</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">课程列表</a>
+                <a href="#" class="active" id="currentPatternName">当前模式</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 面包屑导航 -->
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+            <span class="separator">/</span>
+            <span id="breadcrumbPattern">当前模式</span>
+        </div>
+    </div>
+
+    <!-- 模式概览 -->
+    <header class="pattern-header">
+        <div class="container">
+            <div class="pattern-header-content">
+                <div class="pattern-info">
+                    <span class="pattern-badge" id="patternLevel">基础模式</span>
+                    <h1 id="patternTitle">设计模式名称</h1>
+                    <p id="patternSubtitle">设计模式副标题</p>
+                    <p class="pattern-description" id="patternDescription">设计模式简介...</p>
+                </div>
+                <div class="pattern-actions">
+                    <button class="btn btn-primary" onclick="downloadPPT()">
+                        <i class="fas fa-download"></i> 下载PPT
+                    </button>
+                    <button class="btn btn-outline" onclick="sharePattern()">
+                        <i class="fas fa-share-alt"></i> 分享
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 功能选项卡 -->
+    <div class="tabs-container">
+        <div class="container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="ppt">
+                    <i class="fas fa-presentation"></i>
+                    <span>PPT预览</span>
+                </button>
+                <button class="tab-btn" data-tab="chat">
+                    <i class="fas fa-comments"></i>
+                    <span>实时验证</span>
+                </button>
+                <button class="tab-btn" data-tab="diagram">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>流程图</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 内容区域 -->
+    <main class="pattern-content">
+        <div class="container">
+            <!-- PPT预览标签页 -->
+            <div class="tab-content active" id="ppt-tab">
+                <div class="ppt-viewer">
+                    <div class="ppt-toolbar">
+                        <div class="ppt-nav">
+                            <button class="ppt-nav-btn" onclick="prevSlide()" title="上一页">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span class="ppt-page">
+                                <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+                            </span>
+                            <button class="ppt-nav-btn" onclick="nextSlide()" title="下一页">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="ppt-actions">
+                            <button class="ppt-action-btn" onclick="toggleFullscreen()" title="全屏">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="ppt-action-btn" onclick="downloadPPT()" title="下载">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ppt-slide-container" id="pptSlideContainer">
+                        <div class="ppt-slide" id="pptSlide">
+                            <div class="slide-loading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>正在加载幻灯片...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ppt-thumbnails" id="pptThumbnails"></div>
+                </div>
+            </div>
+
+            <!-- 实时聊天验证标签页 -->
+            <div class="tab-content" id="chat-tab">
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <div class="chat-info">
+                            <h3><i class="fas fa-info-circle"></i> 验证说明</h3>
+                            <p>通过实时对话验证您对本设计模式的理解。AI助手会根据您的回答给出反馈和建议。</p>
+                        </div>
+                        <div class="chat-prompts">
+                            <h4>快速提问</h4>
+                            <button class="prompt-btn" onclick="sendQuickPrompt('概念')">
+                                <i class="fas fa-question-circle"></i> 解释核心概念
+                            </button>
+                            <button class="prompt-btn" onclick="sendQuickPrompt('场景')">
+                                <i class="fas fa-lightbulb"></i> 应用场景举例
+                            </button>
+                            <button class="prompt-btn" onclick="sendQuickPrompt('代码')">
+                                <i class="fas fa-code"></i> 代码实现要点
+                            </button>
+                            <button class="prompt-btn" onclick="sendQuickPrompt('对比')">
+                                <i class="fas fa-balance-scale"></i> 与其他模式对比
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chat-main">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="message assistant">
+                                <div class="message-avatar">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="message-content">
+                                    <p>你好！我是本课程的学习助手。请问有什么关于这个设计模式的问题想要了解吗？</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-area">
+                            <div class="chat-input-container">
+                                <textarea id="chatInput" placeholder="输入您的问题..." rows="1"></textarea>
+                                <button class="send-btn" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 流程图标签页 -->
+            <div class="tab-content" id="diagram-tab">
+                <div class="diagram-container">
+                    <div class="diagram-header">
+                        <h2><i class="fas fa-project-diagram"></i> 设计模式工作流程</h2>
+                        <div class="diagram-controls">
+                            <button class="diagram-btn" onclick="zoomDiagram('in')">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="diagram-btn" onclick="zoomDiagram('out')">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <button class="diagram-btn" onclick="resetDiagram()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="diagram-content">
+                        <div class="mermaid-wrapper" id="mermaidWrapper">
+                            <div class="mermaid" id="mermaidDiagram"></div>
+                        </div>
+                    </div>
+                    <div class="diagram-explanation">
+                        <h3>流程说明</h3>
+                        <div class="explanation-steps" id="explanationSteps"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 相关资源 -->
+    <section class="related-resources">
+        <div class="container">
+            <h2><i class="fas fa-book"></i> 相关资源</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="resource-content">
+                        <h4>详细文档</h4>
+                        <p>查看完整的设计模式文档</p>
+                        <a href="#" class="resource-link" id="docLink">阅读文档 →</a>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon"><i class="fas fa-code"></i></div>
+                    <div class="resource-content">
+                        <h4>代码示例</h4>
+                        <p>LangChain 与 Google ADK 实现</p>
+                        <a href="#" class="resource-link" id="codeLink">查看代码 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 Agent Design Patterns Course. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/pattern-data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/diagram.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { initPatternPage(); });</script>
+</body>
+</html>
