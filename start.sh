@@ -15,6 +15,14 @@ WEB_DIR="$SCRIPT_DIR/docs/web"
 
 mkdir -p "$LOG_DIR" "$PID_DIR"
 
+# Detect UV Environment
+UV_ENV=0
+PYTHON_CMD="python3"
+if [ -f "$SCRIPT_DIR/.venv/bin/python" ]; then
+    UV_ENV=1
+    PYTHON_CMD="$SCRIPT_DIR/.venv/bin/python"
+fi
+
 find_port() {
     python3 -c "import socket; s=socket.socket(); s.bind(('',0)); print(s.getsockname()[1]); s.close()"
 }
@@ -36,10 +44,15 @@ show_menu() {
     echo "   9. Check Service Status"
     echo "  10. Run Diagnostics"
     echo "  11. View Logs"
-    echo "  12. Exit"
+    echo "  12. Init UV Environment"
+    echo "  13. Exit"
+    if [ "$UV_ENV" -eq 1 ]; then
+        echo ""
+        echo "   [UV Mode: .venv]"
+    fi
     echo ""
     echo "================================================"
-    read -p "Please select [1-12]: " choice
+    read -p "Please select [1-13]: " choice
 }
 
 while true; do
@@ -49,25 +62,29 @@ while true; do
         1)
             echo ""
             echo -e "${BLUE}Installing dependencies...${NC}"
-            pip install -e .
+            if [ "$UV_ENV" -eq 1 ]; then
+                uv pip install -e .
+            else
+                pip install -e .
+            fi
             read -p "Press Enter to continue..."
             ;;
         2)
             echo ""
             echo -e "${BLUE}Running system verification...${NC}"
-            python tests/test_system.py
+            $PYTHON_CMD tests/test_system.py
             read -p "Press Enter to continue..."
             ;;
         3)
             echo ""
             echo -e "${BLUE}Running Prompt Chaining demo...${NC}"
-            python src/agents/patterns/chaining.py
+            $PYTHON_CMD src/agents/patterns/chaining.py
             read -p "Press Enter to continue..."
             ;;
         4)
             echo ""
             echo -e "${BLUE}Running Routing demo...${NC}"
-            python src/agents/patterns/routing.py
+            $PYTHON_CMD src/agents/patterns/routing.py
             read -p "Press Enter to continue..."
             ;;
         5)
@@ -192,7 +209,7 @@ while true; do
         10)
             echo ""
             echo -e "${BLUE}Running diagnostics...${NC}"
-            python3 scripts/diagnose.py
+            $PYTHON_CMD scripts/diagnose.py
             read -p "Press Enter to continue..."
             ;;
         11)
@@ -205,6 +222,21 @@ while true; do
             read -p "Press Enter to continue..."
             ;;
         12)
+            echo ""
+            echo -e "${BLUE}Initializing UV Environment...${NC}"
+            if [ -d ".venv" ]; then
+                echo -e "${YELLOW}Virtual environment already exists${NC}"
+                read -p "Recreate? [y/N]: " recreate
+                if [ "$recreate" = "y" ] || [ "$recreate" = "Y" ]; then
+                    rm -rf .venv
+                    python3 scripts/setup_uv.py
+                fi
+            else
+                python3 scripts/setup_uv.py
+            fi
+            read -p "Press Enter to continue..."
+            ;;
+        13)
             echo ""
             echo -e "${GREEN}Goodbye!${NC}"
             exit 0

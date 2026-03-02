@@ -12,6 +12,17 @@ set "LOG_DIR=%SCRIPT_DIR%logs"
 set "PID_DIR=%SCRIPT_DIR%.pids"
 set "WEB_DIR=%SCRIPT_DIR%docs\web"
 
+:: Detect UV Environment
+set "UV_ENV=0"
+set "PYTHON_CMD=python"
+set "PIP_CMD=pip"
+if exist "%SCRIPT_DIR%.venv\Scripts\python.exe" (
+    set "UV_ENV=1"
+    set "PYTHON_CMD=%SCRIPT_DIR%.venv\Scripts\python.exe"
+    set "PIP_CMD=%SCRIPT_DIR%.venv\Scripts\pip.exe"
+    call :LOG "UV Environment detected: .venv"
+)
+
 :: Create directories
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
 if not exist "%PID_DIR%" mkdir "%PID_DIR%"
@@ -44,10 +55,15 @@ echo    8. Stop All Services
 echo    9. Check Service Status
 echo   10. Run Diagnostics
 echo   11. View Logs
-echo   12. Exit
+echo   12. Init UV Environment
+echo   13. Exit
+if "%UV_ENV%"=="1" (
+    echo.
+    echo    [UV Mode: .venv]
+)
 echo.
 echo ================================================
-set /p choice="Please select [1-12]: "
+set /p choice="Please select [1-13]: "
 
 if "%choice%"=="1" goto INSTALL
 if "%choice%"=="2" goto VERIFY
@@ -60,7 +76,8 @@ if "%choice%"=="8" goto STOP_ALL
 if "%choice%"=="9" goto STATUS
 if "%choice%"=="10" goto DIAGNOSE
 if "%choice%"=="11" goto VIEW_LOGS
-if "%choice%"=="12" goto EXIT
+if "%choice%"=="12" goto INIT_UV
+if "%choice%"=="13" goto EXIT
 
 echo Invalid choice, please try again.
 pause
@@ -71,8 +88,13 @@ goto MAIN_MENU
 :: ============================================================
 :INSTALL
 echo.
-echo [INFO] Installing dependencies...
-pip install -e . >> "%LOG_FILE%" 2>&1
+if "%UV_ENV%"=="1" (
+    echo [INFO] Installing dependencies with UV...
+    uv pip install -e . >> "%LOG_FILE%" 2>&1
+) else (
+    echo [INFO] Installing dependencies with pip...
+    pip install -e . >> "%LOG_FILE%" 2>&1
+)
 if errorlevel 1 (
     echo [ERROR] Failed to install dependencies
     echo Check log: %LOG_FILE%
@@ -88,7 +110,7 @@ goto MAIN_MENU
 :VERIFY
 echo.
 echo [INFO] Running system verification...
-python tests/test_system.py >> "%LOG_FILE%" 2>&1
+%PYTHON_CMD% tests/test_system.py >> "%LOG_FILE%" 2>&1
 echo [OK] Done
 pause
 goto MAIN_MENU
@@ -99,7 +121,7 @@ goto MAIN_MENU
 :CHAINING
 echo.
 echo [INFO] Running Prompt Chaining demo...
-python src/agents/patterns/chaining.py >> "%LOG_FILE%" 2>&1
+%PYTHON_CMD% src/agents/patterns/chaining.py >> "%LOG_FILE%" 2>&1
 pause
 goto MAIN_MENU
 
@@ -109,7 +131,7 @@ goto MAIN_MENU
 :ROUTING
 echo.
 echo [INFO] Running Routing demo...
-python src/agents/patterns/routing.py >> "%LOG_FILE%" 2>&1
+%PYTHON_CMD% src/agents/patterns/routing.py >> "%LOG_FILE%" 2>&1
 pause
 goto MAIN_MENU
 
@@ -299,7 +321,7 @@ goto MAIN_MENU
 :DIAGNOSE
 echo.
 echo [INFO] Running diagnostics...
-python scripts/diagnose.py
+%PYTHON_CMD% scripts/diagnose.py
 pause
 goto MAIN_MENU
 
@@ -315,6 +337,25 @@ if exist "%LOG_DIR%" (
     echo   No logs
 )
 echo.
+pause
+goto MAIN_MENU
+
+:: ============================================================
+:: INIT_UV - Initialize UV Environment
+:: ============================================================
+:INIT_UV
+echo.
+echo [INFO] Initializing UV Environment...
+if exist ".venv" (
+    echo [WARN] Virtual environment already exists
+    set /p recreate="Recreate? [y/N]: "
+    if /i "!recreate!"=="y" (
+        rmdir /s /q .venv 2>nul
+        python scripts\setup_uv.py
+    )
+) else (
+    python scripts\setup_uv.py
+)
 pause
 goto MAIN_MENU
 

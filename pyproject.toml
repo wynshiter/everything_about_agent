@@ -22,3 +22,16 @@ dependencies = [
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.uv]
+# UV 包管理器配置
+managed = true
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[tool.uv.pip]
+# pip 兼容模式配置
+python = ".venv/Scripts/python.exe"
