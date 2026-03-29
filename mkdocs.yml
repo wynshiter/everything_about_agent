@@ -22,6 +22,8 @@ theme:
 
 nav:
   - 🏠 首页: index.md
+  - 📚 基础概念:
+    - 🤖 什么是 AI Agent?: practices/Agent_design/chapter0_what_is_agent/index.md
   - 📖 基础模式:
     - 🔗 Chaining (提示链): practices/Agent_design/chapter1_chaining/index.md
     - 🔀 Routing (路由模式): practices/Agent_design/chapter2_routing/index.md
